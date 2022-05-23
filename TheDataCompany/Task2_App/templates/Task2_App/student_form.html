@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container">
+    <h4 style="text-align: center;" class="m-4">Add/Update Student to the Database</h4>
+    <div class="row ">
+      <form method="post" class="m-auto" id="studentForm" data-branches-url="{% url 'ajax_load_branches' %}" novalidate>
+        {% csrf_token %}
+      <center>
+        <div class="table-responsive col-md-5 shadow-lg p-3 mb-5 bg-white rounded">
+          <table class="table align-middle">
+            <tbody style="text-align: center;">
+              <tr>
+                <td><strong>Student Name </strong></td>
+                <td>{{form.name}}</td>
+              </tr>
+              <tr>
+                <td><strong>Student Birthdate </strong></td>
+                <td>{{form.birthdate}}</td>
+              </tr>
+              <tr>
+                <td><strong>Student College </strong></td>
+                <td>{{form.college}}</td>
+              </tr>
+              <tr>
+                <td><strong>Student branch </strong></td>
+                <td>{{form.branch}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="submit" class="btn btn-warning" style="width: 50%;"><b>Save Student</b></button>
+        </div>
+        
+      </center>
+      </form>
+    </div>
+    
+    </div>
+    
+  </div>
+
+  
+
+  
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+    $("#id_college").change(function () {
+      var url = $("#studentForm").attr("data-branches-url");  
+      var collegeId = $(this).val();  
+
+      $.ajax({                      
+        url: url,                    
+        data: {
+          'college': collegeId       
+        },
+        success: function (data) {  
+          $("#id_branch").html(data);  
+        }
+      });
+
+    });
+  </script>
+
+
+{% endblock %}
